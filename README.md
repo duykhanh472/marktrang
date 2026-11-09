@@ -1,4 +1,4 @@
-# mark2web
+# `marktrang`
 
 A Python CLI tool that converts a directory of Markdown chapter files into a fully self-contained static website for reading books online — inspired by the visual design of [burgeonbook.org](https://burgeonbook.org/).
 
@@ -64,28 +64,28 @@ chapters:
 
 ```bash
 # Build website into <book_dir>/dist/
-python mark2web.py ./my-book
+python marktrang.py ./my-book
 
 # Build into a specific output directory
-python mark2web.py ./my-book -o ./public
+python marktrang.py ./my-book -o ./public
 
 # Build and start a local preview server (default port 8080)
-python mark2web.py ./my-book --serve
+python marktrang.py ./my-book --serve
 
 # Custom port
-python mark2web.py ./my-book --serve 3000
+python marktrang.py ./my-book --serve 3000
 
 # Build then push to GitHub Pages (branch: gh-pages)
-python mark2web.py ./my-book --push-gh-pages
+python marktrang.py ./my-book --push-gh-pages
 
 # Push even if output hasn't changed
-python mark2web.py ./my-book --push-gh-pages --force-update
+python marktrang.py ./my-book --push-gh-pages --force-update
 
 # When book_dir is a subdirectory of the repo root, specify the repo explicitly
-python mark2web.py ./my-book --push-gh-pages --repo-dir .
+python marktrang.py ./my-book --push-gh-pages --repo-dir .
 
 # Push to a non-default remote
-python mark2web.py ./my-book --push-gh-pages --remote upstream
+python marktrang.py ./my-book --push-gh-pages --remote upstream
 ```
 
 ### `--push-gh-pages` requirements
