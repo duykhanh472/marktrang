@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block content %}
+<main>
+    <!-- Mobile-only: "Menu" drawer trigger (hidden on desktop via CSS) -->
+    <div class="menu-container js-only" id="mobile-menu-container">
+        <div class="menu-inner linkify" id="mobile-menu-toggle">
+            Menu
+        </div>
+        <div id="mobile-menu-drawer" style="display:none;">
+            <!-- Duplicate of side-nav for mobile -->
+            <div style="padding: 12px;">
+                <span id="mobile-menu-close" class="linkify" style="float:right; font-size:22px;">✕</span>
+                <strong>Chapters</strong>
+                <ul style="list-style:none; padding:0; margin-top: 8px;">
+                    {% for ch in chapters %}
+                    <li style="padding: 4px 0;">
+                        <a href="{{ '../' if in_chapter else '' }}chapter/{{ ch.num }}.html"
+                           class="link{% if ch.num == chapter.num %} active-link{% endif %}"
+                           title="{{ ch.title }}">
+                            {{ ch.num }}. {{ ch.title }}
+                        </a>
+                    </li>
+                    {% endfor %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <!-- Fixed side navigation -->
+    <nav class="side-nav" aria-label="Chapter navigation">
+        <!-- Download icon -->
+        {% if downloads %}
+        <a href="../../index.html#downloads-section" title="Download the book" class="link">
+            <img src="{{ root_path }}images/download-outline.svg"
+                 class="side-icon" style="width:30px; padding-left:11px;"
+                 alt="Downloads" />
+        </a>
+        {% endif %}
+
+        <!-- Home icon -->
+        <a href="{{ root_path }}index.html" title="Go to Home" class="link">
+            <img src="{{ root_path }}images/home-outline.svg"
+                 class="side-icon" style="width:26px; padding-left:13px;"
+                 alt="Home" />
+        </a>
+
+        <!-- Chapter number links -->
+        {% for ch in chapters %}
+        <a href="{{ root_path }}chapter/{{ ch.num }}.html"
+           class="link nav-chapter-link{% if ch.num == chapter.num %} active-link{% endif %}"
+           data-chapter="{{ ch.num }}"
+           title="{{ ch.title }}">
+            {{ ch.num }}
+        </a>
+        {% endfor %}
+
+        <!-- Settings icon (JS-only: reader.js reveals the modal) -->
+        <img src="{{ root_path }}images/settings-outline.svg"
+             class="side-icon linkify open-settings-btn js-only"
+             style="width:30px; padding-left:11px; margin-top: 10px;"
+             title="Open Settings"
+             alt="Settings" />
+
+        <div style="margin-bottom: 30px;"></div>
+    </nav>
+
+    <br/>
+
+    <!-- Chapter header -->
+    <div class="chapter-header">
+        <img src="{{ root_path }}images/fluerstar1.png"
+             height="100px"
+             class="topblob"
+             alt="decorative star" />
+        <h3 class="light-up-underline" style="margin-bottom:0px; margin-top:3px;">
+            Chapter {{ chapter.num }}
+        </h3>
+        <h1 class="light-up-underline" style="margin-top:2px;">{{ chapter.title }}</h1>
+        {% if chapter.subtitle %}
+        <p style="margin-top: 0; color: var(--side-nav-link, #9c9c9c);">{{ chapter.subtitle }}</p>
+        {% endif %}
+    </div>
+
+    <!-- Chapter body content -->
+    <div class="cent-container">
+        <article class="chapter" id="chapter-content">
+            {{ chapter_html | safe }}
+        </article>
+    </div>
+
+    <!-- Chapter navigation footer -->
+    <div class="chapter-navigation">
+        {% if prev_chapter %}
+        <a href="{{ prev_chapter.num }}.html"
+           class="nav-button"
+           title="{{ prev_chapter.title }}">
+            <button class="button">← Chapter {{ prev_chapter.num }}</button>
+        </a>
+        {% endif %}
+
+        <!-- Mark Done button: JS-only, hidden without JS -->
+        <button class="button mark_done_button js-only"
+                data-chapter="{{ chapter.num }}"
+                title="Mark this chapter as complete">
+            Mark Done
+        </button>
+
+        {% if next_chapter %}
+        <a href="{{ next_chapter.num }}.html"
+           class="nav-button"
+           title="{{ next_chapter.title }}">
+            <button class="button completion-button">Chapter {{ next_chapter.num }} →</button>
+        </a>
+        {% else %}
+        <a href="{{ root_path }}index.html"
+           class="nav-button"
+           title="Back to Home">
+            <button class="button completion-button">Finish Book ✓</button>
+        </a>
+        {% endif %}
+    </div>
+
+    <br/><br/><br/>
+</main>
+{% endblock %}

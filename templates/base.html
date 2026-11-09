@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="{{ book.language }}" class="no-js">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+    <!-- OpenGraph / Social -->
+    <meta property="og:type" content="{% block og_type %}article{% endblock %}" />
+    <meta property="og:title" content="{{ page_title }}" />
+    <meta property="og:description" content="{{ book.description or book.title }}" />
+    {% if book.cover %}
+    <meta property="og:image" content="{{ og_image_path | default('./images/' + book.cover | basename) }}" />
+    {% endif %}
+
+    <!-- SEO -->
+    <meta name="description" content="{{ book.description or book.title }}" />
+    <meta name="author" content="{{ book.author }}" />
+
+    <title>{{ page_title }}</title>
+
+    <link rel="icon" type="image/png" href="{{ root_path }}favicon.png" />
+    <link rel="stylesheet" href="{{ root_path }}css/global.css" />
+
+    <!--
+        Progressive Enhancement: switch "no-js" → "js" on <html> immediately,
+        before the page renders, to avoid Flash Of Un-styled Content (FOUC).
+        This tiny inline script is the ONLY JavaScript we ever run unconditionally.
+    -->
+    <script>
+        document.documentElement.className =
+            document.documentElement.className.replace('no-js', 'js');
+    </script>
+</head>
+<body>
+
+<!-- ============================================================
+     No-JS banner  (only visible when JavaScript is disabled)
+     ============================================================ -->
+<noscript>
+    <div class="noscript-banner">
+        JavaScript is disabled — reading mode is active with default styling.
+        {% if downloads %}
+        <a href="#downloads-section">Download the book</a> for offline reading.
+        {% endif %}
+    </div>
+</noscript>
+
+<!-- ============================================================
+     Settings Modal  (shown/hidden via reader.js)
+     Hidden entirely when JS is off (.no-js .js-only { display:none })
+     ============================================================ -->
+<div class="middlefy js-only">
+    <div class="overlay" id="reader-overlay"></div>
+    <div class="settings-container" id="settings-container">
+        <div class="settings">
+            <div>
+                <img src="{{ root_path }}images/close-outline.svg"
+                     id="close-settings-btn"
+                     class="close-settings linkify invert-color"
+                     alt="Close settings"
+                     title="Close" />
+            </div>
+            <h1>Settings</h1>
+
+            <label for="select-theme">Theme</label>
+            <select class="select" id="select-theme">
+                <option value="warm-dark">Dark Theme (Warm)</option>
+                <option value="cool-dark">Dark Theme (Cool)</option>
+                <option value="light">Light Theme</option>
+                <option value="light-grid">Light Theme (Grid)</option>
+                <option value="retro-dark">Retro Theme</option>
+                <option value="black">Black Theme (OLED)</option>
+            </select>
+            <br/><br/>
+
+            <label for="select-font">Font</label>
+            <select class="select fontify-pls" id="select-font">
+                <option value="open-sans">Open Sans</option>
+                <option value="pt-serif">PT Serif</option>
+                <option value="pt-sans">PT Sans</option>
+                <option value="monnaco">Monnaco</option>
+                <option value="georgia">Georgia</option>
+                <option value="open-dyslexic">Open Dyslexic</option>
+            </select>
+            <br/><br/>
+
+            <label for="select-align">Alignment</label>
+            <select class="select" id="select-align">
+                <option value="left">Left</option>
+                <option value="middle">Middle</option>
+                <option value="right">Right</option>
+            </select>
+            <br/><br/>
+
+            <small style="color: var(--side-nav-link, #9c9c9c);">
+                {{ book.title }}{% if book.version %} · v{{ book.version }}{% endif %}
+            </small>
+        </div>
+    </div>
+</div>
+
+{% block content %}{% endblock %}
+
+<!-- Reader JS: enhances the page when JS is available -->
+<script src="{{ root_path }}js/reader.js"></script>
+</body>
+</html>

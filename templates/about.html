@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block og_type %}article{% endblock %}
+
+{% block content %}
+<main>
+    <div style="margin-top: 15px; margin-bottom: 15px;">
+        <a href="index.html">← Back to Home</a>
+    </div>
+
+    <img src="images/fluer1.svg"
+         style="filter: invert(100%); border: none;"
+         height="120px"
+         alt="Book logo" />
+
+    <h3>About the project</h3>
+
+    <div class="cent-container">
+        <div class="writeup" id="about-content">
+            {{ about_html | safe }}
+        </div>
+    </div>
+
+    <br/><br/>
+</main>
+{% endblock %}

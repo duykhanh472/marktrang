@@ -1,0 +1,101 @@
+{% extends "base.html" %}
+{% block og_type %}website{% endblock %}
+
+{% block content %}
+<main>
+    <!-- Home navigation bar -->
+    <div class="home-nav-links">
+        {% if readme_exists %}
+        <a href="about.html">About</a> ✧
+        {% endif %}
+        {% if downloads %}
+        <a href="#downloads-section">Downloads</a>
+        {% endif %}
+    </div>
+
+    <!-- Book cover / logo -->
+    {% if book.cover %}
+    <img src="images/{{ book.cover | basename }}"
+         class="circle-light-up"
+         style="max-height: 220px; border: none;"
+         alt="{{ book.title }} cover" />
+    {% else %}
+    <img src="images/fluer1.svg"
+         class="circle-light-up"
+         style="filter: invert(100%); border: none;"
+         height="200px"
+         alt="Book logo" />
+    {% endif %}
+
+    <!-- Title -->
+    <h1 class="light-up-underline" style="margin-top: 5px;">
+        {{ book.title }}
+    </h1>
+
+    <!-- Version / status badge -->
+    {% if book.version %}
+    <p style="margin-bottom: 0;">
+        <span style="color: #e8d98a; text-decoration: underline; text-underline-offset: 4px;">
+            Version {{ book.version }}
+        </span>
+    </p>
+    {% endif %}
+
+    <!-- Description -->
+    {% if book.description %}
+    <p style="margin-top: 14px;">{{ book.description }}<br/>
+        {% if book.author %}<em>— {{ book.author }}</em>{% endif %}
+    </p>
+    {% endif %}
+
+    <!-- CTA Buttons -->
+    <span>
+        <a href="chapter/1.html">
+            <button class="button">Read Online</button>
+        </a>
+    </span>
+    {% if downloads %}
+    <span style="margin-left: 8px;">
+        <a href="#downloads-section">
+            <button class="button">Downloads</button>
+        </a>
+    </span>
+    {% endif %}
+
+    <br/><br/>
+
+    <!-- Table of Contents -->
+    <h2 style="margin-bottom: 8px;">Contents</h2>
+    <ul class="toc-list">
+        {% for ch in chapters %}
+        <li>
+            <a href="chapter/{{ ch.num }}.html" title="Read: {{ ch.title }}">
+                <span class="toc-chapter-num">{{ ch.num }}.</span>
+                {{ ch.title }}
+                {% if ch.subtitle %}
+                <br/><small style="padding-left: 32px; color: var(--side-nav-link, #9c9c9c);">{{ ch.subtitle }}</small>
+                {% endif %}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+
+    <!-- Downloads Section (always accessible, no JS required) -->
+    {% if downloads %}
+    <div class="download-section" id="downloads-section">
+        <h2>Downloads</h2>
+        <ul class="download-links">
+            {% for dl in downloads %}
+            <li>
+                <a href="{{ dl.url }}" target="_blank" rel="noopener noreferrer">
+                    <button class="button">{{ dl.label }}</button>
+                </a>
+            </li>
+            {% endfor %}
+        </ul>
+    </div>
+    {% endif %}
+
+    <br/>
+</main>
+{% endblock %}

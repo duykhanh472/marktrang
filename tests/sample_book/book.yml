@@ -1,0 +1,18 @@
+title: "An Example Book for Testing"
+author: Jane Austen
+description: A classic novel of manners, adapted for testing mark2web.
+language: en
+version: "1.0"
+banner: "This is a test banner — ignore it."
+cover: images/cover.jpg
+
+downloads:
+  - label: "Download EPUB"
+    url: "https://example.com/book.epub"
+  - label: "Download PDF"
+    url: "https://example.com/book.pdf"
+
+chapters:
+  - 'Chapter 1': 01.md
+  - 'Chapter 2': 02.md
+  - 'Chapter 3': 03.md

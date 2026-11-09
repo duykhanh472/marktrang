@@ -1,0 +1,595 @@
+/* =============================================================================
+   mark2web — global.css
+   Based on burgeonbook.org visual design.
+   Progressive Enhancement: static fallbacks declared before all var(--...) calls.
+   Supports: Modern browsers (full features), legacy browsers & IE11+ (content),
+             No-JS mode (class .no-js on <html>), and E-ink / text browsers.
+   ============================================================================= */
+
+/* ---------------------------------------------------------------------------
+   1. CSS Custom Properties (Themes)
+   --------------------------------------------------------------------------- */
+:root {
+    /* Default: Warm Dark Theme */
+    --main-background:        #1a1713;
+    --secondary-background:   #312f2c;
+    --third-background:       #11100c;
+    --title-color:            #e9e9e9;
+    --text-color:             #dbdbdb;
+    --text-bright-color:      white;
+    --red-color:              #db4bff;
+    --green-color:            #334e33;
+    --side-nav-link:          #9c9c9c;
+    --side-nav-active-border: #221b1b;
+    --invert-full:            100%;
+    --invert-half:            55%;
+    --invert-half-hover:      80%;
+    --main-font:              open-sans, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --para-size:              17px;
+    --markdown-alignment:     left;
+    --a-color:                rgb(247, 187, 255);
+    --background-image:       none;
+}
+
+.cool-dark-theme {
+    --main-background:        #14131a;
+    --secondary-background:   #2b2b2b;
+    --third-background:       #101013;
+}
+
+.light-theme {
+    --main-background:        #e7e7e7;
+    --secondary-background:   #c5c5c5;
+    --third-background:       #d8d8d8;
+    --title-color:            #111111;
+    --text-color:             #080808;
+    --text-bright-color:      #000000;
+    --side-nav-active-border: #756a6a;
+    --invert-full:            0%;
+    --invert-half:            25%;
+    --invert-half-hover:      0%;
+    --a-color:                blue;
+}
+
+.light-grid-theme {
+    --main-background:        #e7e7e7;
+    --secondary-background:   #c5c5c5;
+    --third-background:       #d8d8d8;
+    --title-color:            #111111;
+    --text-color:             #080808;
+    --text-bright-color:      #000000;
+    --red-color:              #8d1424;
+    --green-color:            #334e33;
+    --side-nav-link:          #3b3b3b;
+    --side-nav-active-border: #756a6a;
+    --invert-full:            0%;
+    --invert-half:            25%;
+    --invert-half-hover:      0%;
+    --background-image:       url("../images/background-grid.png");
+    --a-color:                blue;
+}
+
+.warm-dark-theme {
+    --main-background:        #1a1713;
+    --secondary-background:   #312f2c;
+    --third-background:       #11100c;
+}
+
+.black-theme {
+    --main-background:        #000000;
+    --secondary-background:   #080808;
+    --third-background:       #030303;
+}
+
+.retro-dark-theme {
+    --main-background:        #2b213a;
+    --secondary-background:   #2e2c31;
+    --third-background:       #231f41;
+    --h1-color:               #ffecff;
+    --h1-shadow:              0 0 0.5em #ff00ff;
+    --h2-color:               #d3ffff;
+    --h2-shadow:              0 0 0.5em #00ffff;
+    --text-color:             #ececec;
+    --text-bright-color:      white;
+    --red-color:              #ff00ff;
+    --green-color:            #314879;
+    --side-nav-link:          #9c9c9c;
+    --side-nav-active-border: #665364;
+    --invert-full:            100%;
+    --invert-half:            55%;
+    --invert-half-hover:      80%;
+}
+
+.middle-align { --markdown-alignment: center; }
+.right-align  { --markdown-alignment: right; }
+
+/* ---------------------------------------------------------------------------
+   2. Web Fonts (@font-face)
+   --------------------------------------------------------------------------- */
+@font-face {
+    font-family: 'monnaco';
+    src: url('../fonts/monnaco.otf');
+    font-display: swap;
+}
+@font-face {
+    font-family: 'open-sans';
+    src: url('../fonts/open-sans.ttf');
+    font-display: swap;
+}
+@font-face {
+    font-family: 'open-dyslexic';
+    src: url('../fonts/open-dyslexic.otf');
+    font-display: swap;
+}
+@font-face {
+    font-family: 'georgiaa';
+    src: url('../fonts/georgia.ttf');
+    font-display: swap;
+}
+@font-face {
+    font-family: 'pt-sans';
+    src: url('../fonts/pt-sans.ttf');
+    font-display: swap;
+}
+@font-face {
+    font-family: 'pt-serif';
+    src: url('../fonts/pt-serif.ttf');
+    font-display: swap;
+}
+
+/* Font class overrides */
+.monnaco-font      { --main-font: monnaco, monospace;             --para-size: 19px; }
+.open-dyslexic-font{ --main-font: open-dyslexic, sans-serif;      --para-size: 17px; }
+.georgia-font      { --main-font: georgiaa, Georgia, serif;        --para-size: 18px; }
+.pt-sans-font      { --main-font: pt-sans, "PT Sans", sans-serif;  --para-size: 18px; }
+.pt-serif-font     { --main-font: pt-serif, "PT Serif", serif;     --para-size: 18px; }
+
+/* ---------------------------------------------------------------------------
+   3. Reset & Base
+   --------------------------------------------------------------------------- */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+body {
+    /* Static fallbacks for legacy browsers (IE11, old WebKit, E-ink) */
+    background-color: #1a1713;
+    color: #dbdbdb;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Georgia, serif;
+    text-align: center;
+    margin: 0;
+    padding: 0;
+    /* Modern browsers */
+    background-color: var(--main-background, #1a1713);
+    background-image: var(--background-image, none);
+    background-repeat: repeat;
+    color: var(--text-color, #dbdbdb);
+    font-family: var(--main-font, -apple-system, sans-serif);
+}
+
+h1, h2, h3, h4, h5, h6 {
+    color: #e9e9e9;
+    color: var(--title-color, #e9e9e9);
+    font-weight: 600;
+    overflow: visible;
+}
+h1 {
+    color: var(--h1-color, var(--title-color, #e9e9e9));
+    text-shadow: var(--h1-shadow, none);
+}
+h2 {
+    color: var(--h2-color, var(--title-color, #e9e9e9));
+    text-shadow: var(--h2-shadow, none);
+}
+
+a {
+    color: rgb(247, 187, 255);
+    color: var(--a-color, rgb(247, 187, 255));
+    text-decoration: none;
+}
+a:hover { text-decoration: underline; }
+
+div { scrollbar-width: thin; }
+
+strong { border-bottom: 1px dashed var(--red-color, #db4bff); }
+
+li {
+    font-size: 18px;
+    margin-left: -28px;
+}
+
+/* ---------------------------------------------------------------------------
+   4. No-JS: Hide JS-only elements
+   --------------------------------------------------------------------------- */
+/* When JS is off, <html> keeps class="no-js" */
+.no-js .js-only {
+    display: none !important;
+}
+/* Ensure nav buttons are always usable without JS */
+.no-js .completion-button,
+.no-js .nav-button button {
+    opacity: 1 !important;
+    cursor: pointer !important;
+    pointer-events: auto !important;
+}
+
+/* noscript notification bar */
+.noscript-banner {
+    background-color: #3b3210;
+    background-color: var(--secondary-background, #3b3210);
+    color: #e8d98a;
+    text-align: center;
+    padding: 6px 12px;
+    font-size: 13px;
+}
+
+/* ---------------------------------------------------------------------------
+   5. Buttons & Form Controls
+   --------------------------------------------------------------------------- */
+.button, input[type=button] {
+    color: white;
+    color: var(--text-bright-color, white);
+    border: 2px solid #312f2c;
+    border: 2px solid var(--secondary-background, #312f2c);
+    height: 30px;
+    border-radius: 5px;
+    font-size: 20px;
+    background-color: #312f2c;
+    background-color: var(--secondary-background, #312f2c);
+    padding: 2px 10px 3px;
+    font-family: monnaco, monospace;
+    cursor: pointer;
+}
+.button:hover, input[type=button]:hover {
+    cursor: pointer;
+    border: 1px solid var(--red-color, #db4bff);
+}
+.button:disabled, .button[disabled] {
+    cursor: not-allowed;
+    filter: opacity(50%);
+}
+
+.select {
+    border: 0 none;
+    height: 30px;
+    border-radius: 5px;
+    font-size: 18px;
+    min-width: 150px;
+    padding-bottom: 2px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background-color: var(--secondary-background, #312f2c);
+    color: var(--text-bright-color, white);
+}
+.select:hover { outline: 1px solid var(--red-color, #db4bff); }
+.fontify-pls  { font-family: var(--main-font, sans-serif); }
+
+/* ---------------------------------------------------------------------------
+   6. Utility Classes
+   --------------------------------------------------------------------------- */
+.no-margin    { margin: 0; }
+.no-padding   { padding: 0; }
+.linkify:hover { cursor: pointer; }
+.invert-color  { filter: invert(var(--invert-full, 100%)); }
+.side-icon     { filter: invert(var(--invert-half, 55%)); }
+.side-icon:hover { filter: invert(var(--invert-half-hover, 80%)); }
+
+.circle-light-up { border: 1px solid var(--main-background, #1a1713); }
+.circle-light-up:hover {
+    border-radius: 50%;
+    border: 1px solid var(--red-color, #db4bff);
+}
+.img-light-up { border: 1px solid var(--main-background, #1a1713); }
+.img-light-up:hover { border: 1px solid var(--red-color, #db4bff); }
+
+.light-up-underline:hover {
+    text-decoration: underline;
+    text-decoration-color: var(--red-color, #db4bff);
+}
+
+/* ---------------------------------------------------------------------------
+   7. Layout — Centred Container (with Flexbox + fallback)
+   --------------------------------------------------------------------------- */
+.cent-container {
+    /* Fallback for browsers without Flexbox */
+    text-align: center;
+    display: block;
+    /* Modern */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+}
+
+/* ---------------------------------------------------------------------------
+   8. Chapter Content Area
+   --------------------------------------------------------------------------- */
+.chapter {
+    font-family: var(--main-font, Georgia, serif);
+    max-width: 750px;
+    padding-left: 4px;
+    padding-right: 5px;
+    text-align: left;
+    text-align: var(--markdown-alignment, left);
+    /* Fallback for centering the block itself in older browsers */
+    display: inline-block;
+    vertical-align: top;
+}
+.chapter h1, .chapter h2, .chapter h3,
+.chapter h4, .chapter h5, .chapter h6 {
+    font-family: var(--main-font, Georgia, serif);
+}
+.chapter p { font-size: var(--para-size, 17px); }
+
+/* ---------------------------------------------------------------------------
+   9. Chapter Header
+   --------------------------------------------------------------------------- */
+.chapter-header {
+    margin-left: 50px;
+    -webkit-transition: padding-top 0.25s ease;
+            transition: padding-top 0.25s ease;
+}
+.chapter-header .topblob {
+    display: block;
+    margin: 0 auto 4px;
+}
+
+/* ---------------------------------------------------------------------------
+   10. Side Navigation (fixed left panel, 50px wide)
+   --------------------------------------------------------------------------- */
+.side-nav {
+    height: 100%;
+    width: 50px;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background-color: #11100c;
+    background-color: var(--third-background, #11100c);
+    padding-top: 20px;
+    overflow-x: hidden;
+}
+.side-nav .link {
+    padding: 6px 8px 6px 9px;
+    text-decoration: none;
+    font-size: 25px;
+    color: #9c9c9c;
+    color: var(--side-nav-link, #9c9c9c);
+    display: block;
+}
+.side-nav .link:hover { color: var(--text-bright-color, white); }
+.side-nav .active-link {
+    color: var(--text-bright-color, white);
+    border: 2px solid var(--side-nav-active-border, #221b1b);
+    border-radius: 5px;
+    margin: 3px;
+}
+.side-nav .dot {
+    height: 4px;
+    width: 4px;
+    border-radius: 50%;
+    background-color: #3ab33a;
+    margin-left: 13px;
+    margin-top: 10px;
+    display: block;
+}
+
+/* ---------------------------------------------------------------------------
+   11. Settings Modal
+   --------------------------------------------------------------------------- */
+.settings-container {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+    left: 50%;
+    top: 40%;
+}
+.settings-container.open { display: flex; }
+.settings {
+    position: absolute;
+    padding: 10px;
+    background-color: var(--secondary-background, #312f2c);
+    border-radius: 10px;
+    min-height: 270px;
+    min-width: 500px;
+    filter: drop-shadow(12px 12px 1px black);
+}
+.overlay {
+    position: fixed;
+    top: 0; left: 0;
+    width: 100vw;
+    height: 100vh;
+    z-index: 99;
+    background: rgba(0,0,0,.6);
+    display: none;
+}
+.overlay.open { display: block; }
+.close-settings {
+    position: absolute;
+    display: block;
+    height: 40px;
+    right: 10px;
+    cursor: pointer;
+}
+
+/* ---------------------------------------------------------------------------
+   12. Mobile Menu Drawer
+   --------------------------------------------------------------------------- */
+.menu-inner {
+    position: absolute;
+    background-color: var(--third-background, #11100c);
+    width: 100vw;
+    padding: 10px;
+}
+.menu-container {
+    display: none;
+    position: fixed;
+    z-index: 100;
+    justify-content: center;
+    align-items: center;
+    top: 0;
+    left: -10px;
+}
+.menu-container.open { display: block; }
+.middlefy {
+    position: fixed;
+    top: 0; left: 0;
+    z-index: 1000;
+}
+
+/* ---------------------------------------------------------------------------
+   13. Chapter Navigation Footer
+   --------------------------------------------------------------------------- */
+.chapter-navigation {
+    margin-top: 40px;
+    margin-bottom: 40px;
+    text-align: center;
+    display: block;
+}
+.chapter-navigation > * {
+    margin: 4px;
+    display: inline-block;
+}
+.completion-button {
+    background-color: #334e33;
+    background-color: var(--green-color, #334e33);
+    border: 1px solid #334e33;
+    border: 1px solid var(--green-color, #334e33);
+    color: rgb(226, 226, 226);
+}
+.completion-button:hover { border: 1px solid var(--text-color, #dbdbdb); }
+.mark_done_button:hover  { border: 2px solid #3ab33a; }
+.mark_done_button.done   { border: 1px solid #3ab33a; color: #3ab33a; }
+
+/* ---------------------------------------------------------------------------
+   14. Home Page (index) Styles
+   --------------------------------------------------------------------------- */
+.home-nav-links {
+    margin: 15px 0;
+    font-size: 15px;
+}
+.toc-list {
+    list-style: none;
+    padding: 0;
+    margin: 20px auto;
+    max-width: 500px;
+    text-align: left;
+}
+.toc-list li {
+    margin-left: 0;
+    padding: 4px 0;
+    font-size: 17px;
+    border-bottom: 1px solid var(--secondary-background, #312f2c);
+}
+.toc-list li:last-child { border-bottom: none; }
+.toc-list a {
+    display: block;
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+.toc-list a:hover { background-color: var(--secondary-background, #312f2c); }
+.toc-chapter-num {
+    display: inline-block;
+    min-width: 28px;
+    color: var(--side-nav-link, #9c9c9c);
+    font-size: 14px;
+}
+
+.download-section {
+    margin: 24px auto;
+    max-width: 480px;
+    text-align: center;
+}
+.download-section h2 {
+    font-size: 20px;
+    margin-bottom: 12px;
+}
+.download-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+.download-links li { margin: 8px 0; }
+.download-links a .button { width: 220px; }
+
+/* ---------------------------------------------------------------------------
+   15. About Page
+   --------------------------------------------------------------------------- */
+.writeup {
+    max-width: 850px;
+    text-align: left;
+    text-align: var(--markdown-alignment, left);
+    margin: 0 auto;
+    padding: 0 16px;
+}
+.writeup p { font-size: var(--para-size, 17px); }
+
+/* ---------------------------------------------------------------------------
+   16. Scrollbar Styling (Webkit)
+   --------------------------------------------------------------------------- */
+::-webkit-scrollbar { width: 4px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+    background-color: rgba(155, 155, 155, 0.5);
+    border-radius: 20px;
+    border: transparent;
+}
+
+/* ---------------------------------------------------------------------------
+   17. Misc visual decorations
+   --------------------------------------------------------------------------- */
+.mini-flag {
+    margin: 0 4px;
+    height: 15px;
+    border-radius: 2px;
+    animation: rainbow 7s linear infinite;
+}
+.mini-flag:hover { filter: opacity(60%); }
+
+@keyframes rainbow {
+    0%,100% { border: 1px solid rgb(255,0,0); }
+    8%       { border: 1px solid rgb(255,127,0); }
+    16%      { border: 1px solid rgb(255,255,0); }
+    25%      { border: 1px solid rgb(127,255,0); }
+    33%      { border: 1px solid rgb(0,255,0); }
+    41%      { border: 1px solid rgb(0,255,127); }
+    50%      { border: 1px solid rgb(0,255,255); }
+    58%      { border: 1px solid rgb(0,127,255); }
+    66%      { border: 1px solid rgb(0,0,255); }
+    75%      { border: 1px solid rgb(127,0,255); }
+    83%      { border: 1px solid rgb(255,0,255); }
+    91%      { border: 1px solid rgb(255,0,127); }
+}
+.rainbow_text_animated {
+    background: linear-gradient(to right, #6666ff, #0099ff, #00ff00, #ff3399, #6666ff);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    animation: rainbow_animation 6s ease-in-out infinite;
+    background-size: 400% 100%;
+}
+@keyframes rainbow_animation {
+    0%,100% { background-position: 0 0; }
+    50%      { background-position: 100% 0; }
+}
+
+/* ---------------------------------------------------------------------------
+   18. Mobile Responsive  (≤ 570px or height ≤ 400px)
+   --------------------------------------------------------------------------- */
+@media only screen and (max-width: 570px),
+       only screen and (max-height: 400px) {
+    .settings-container { left: 0; top: 0; }
+    .settings { min-height: 100vh; min-width: 100vw; border-radius: 0; top: 0; left: 0; }
+    .close-settings { margin-right: 20px; }
+    .side-nav { display: none; }
+    .chapter-header { margin: 2px; }
+    .menu-container { display: block; }
+    .chapter-header .topblob { margin-top: 25px; }
+}
+@media only screen and (max-width: 470px) {
+    .completion-button { margin-top: 10px; }
+}
